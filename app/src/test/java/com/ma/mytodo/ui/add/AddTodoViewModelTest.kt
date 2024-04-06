@@ -71,7 +71,6 @@ class AddTodoViewModelTest {
         Assert.assertEquals(TodoTimeUiModel(12, 20), viewModel.uiState.value.dateTime.time)
     }
 
-
     @Test
     fun `The time hour should be from 0 to 23 and minute should be 0 to 59`() {
         val viewModel = createViewModel()
