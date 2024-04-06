@@ -45,10 +45,20 @@ class AddTodoViewModelTest {
     fun `When title changed, the title value should be updated`() {
         //Given
         val viewModel = createViewModel()
-        viewModel.titleChanged("Here")
+        viewModel.titleChanged("Title")
 
         //Then
-        Assert.assertEquals("Here", viewModel.uiState.value.title.value)
+        Assert.assertEquals("Title", viewModel.uiState.value.title.value)
+    }
+
+    @Test
+    fun `When description changed, the description value should be updated`() {
+        //Given
+        val viewModel = createViewModel()
+        viewModel.descriptionChanged("Description")
+
+        //Then
+        Assert.assertEquals("Description", viewModel.uiState.value.description.value)
     }
 
 
