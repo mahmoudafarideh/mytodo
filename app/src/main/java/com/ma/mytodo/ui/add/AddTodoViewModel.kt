@@ -25,4 +25,10 @@ class AddTodoViewModel @Inject constructor() : ViewModel() {
         updateState { it.copy(description = it.description.copy(value = description)) }
     }
 
+    fun timeChanged(hour: Int, minute: Int) {
+        updateState {
+            it.copy(dateTime = it.dateTime.copy(time = TodoTimeUiModel(hour, minute)))
+        }
+    }
+
 }
