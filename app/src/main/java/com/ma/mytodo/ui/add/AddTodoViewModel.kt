@@ -26,6 +26,8 @@ class AddTodoViewModel @Inject constructor() : ViewModel() {
     }
 
     fun timeChanged(hour: Int, minute: Int) {
+        val hour = if(hour > 23) 23 else if(hour < 0) 0 else hour
+        val minute = if(minute > 59) 59 else if(minute < 0) 0 else minute
         updateState {
             it.copy(
                 dateTime = it.dateTime.copy(

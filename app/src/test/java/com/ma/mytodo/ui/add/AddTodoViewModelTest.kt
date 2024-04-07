@@ -58,5 +58,34 @@ class AddTodoViewModelTest {
         )
     }
 
+    @Test
+    fun `Time hour should be from 0 to 23 and minute from 0 to 59`() {
+        val viewModel = createViewModel()
+
+        viewModel.timeChanged(24, 34)
+        assertEquals(
+            TodoTimeUiModel(23, 34),
+            viewModel.uiState.value.dateTime.time
+        )
+
+        viewModel.timeChanged(-1, 34)
+        assertEquals(
+            TodoTimeUiModel(0, 34),
+            viewModel.uiState.value.dateTime.time
+        )
+
+        viewModel.timeChanged(0, 60)
+        assertEquals(
+            TodoTimeUiModel(0, 59),
+            viewModel.uiState.value.dateTime.time
+        )
+
+        viewModel.timeChanged(0, -1)
+        assertEquals(
+            TodoTimeUiModel(0, 0),
+            viewModel.uiState.value.dateTime.time
+        )
+    }
+
 
 }
