@@ -41,5 +41,12 @@ class AddTodoViewModelTest {
         assertEquals("New Title", viewModel.uiState.value.title.value)
     }
 
+    @Test
+    fun `When description changed, the description state should get updated`() {
+        val viewModel = createViewModel()
+        viewModel.descriptionChanged("New Description")
+        assertEquals("New Description", viewModel.uiState.value.description.value)
+    }
+
 
 }

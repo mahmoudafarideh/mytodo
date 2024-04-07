@@ -17,4 +17,8 @@ class AddTodoViewModel @Inject constructor() : ViewModel() {
         _uiState.update { it.copy(title = it.title.copy(value = title)) }
     }
 
+    fun descriptionChanged(description: String) {
+        _uiState.update { it.copy(description = it.description.copy(value = description)) }
+    }
+
 }
