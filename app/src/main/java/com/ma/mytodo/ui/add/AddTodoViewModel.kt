@@ -1,12 +1,15 @@
 package com.ma.mytodo.ui.add
 
 import androidx.lifecycle.ViewModel
+import com.ma.mytodo.utils.CalendarProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.Calendar
 
-class AddTodoViewModel : ViewModel() {
+class AddTodoViewModel(
+    private val calendarProvider: CalendarProvider
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddTodoUiModel())
     val uiState = _uiState.asStateFlow()
@@ -41,7 +44,7 @@ class AddTodoViewModel : ViewModel() {
     }
 
     private fun getTodayDate(): TodoRepeatDateUiModel.Single {
-        val calendar = Calendar.getInstance()
+        val calendar = calendarProvider.getCalendar()
         return TodoRepeatDateUiModel.Single(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
@@ -50,8 +53,8 @@ class AddTodoViewModel : ViewModel() {
     }
 
     private fun getCurrentTime(): TodoTimeUiModel {
-        val calendar = Calendar.getInstance()
-        return TodoTimeUiModel(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
+        val calendar = calendarProvider.getCalendar()
+        return TodoTimeUiModel(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))
     }
 
     private fun updateState(action: (AddTodoUiModel) -> AddTodoUiModel) {

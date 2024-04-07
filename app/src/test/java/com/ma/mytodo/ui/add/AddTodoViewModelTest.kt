@@ -1,5 +1,6 @@
 package com.ma.mytodo.ui.add
 
+import com.ma.mytodo.utils.CalendarProvider
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -8,7 +9,10 @@ import java.util.Calendar
 
 class AddTodoViewModelTest {
 
-    private fun createViewModel() = AddTodoViewModel()
+    private fun createCalendarProvider() = FakeCalendarProvider()
+    private fun createViewModel(
+        calendarProvider: CalendarProvider = createCalendarProvider()
+    ) = AddTodoViewModel(calendarProvider)
 
     @Test
     fun `When view model created, initial title state should be null and should have no error`() {
@@ -104,6 +108,21 @@ class AddTodoViewModelTest {
                 calendar.get(Calendar.DAY_OF_MONTH)
             ),
             viewModel.uiState.value.dateTime.repeatDate
+        )
+    }
+
+    @Test
+    fun `Time hour should be 24 hours format`() {
+        val calendarProvider = createCalendarProvider()
+        val viewModel = createViewModel(calendarProvider)
+        calendarProvider.getCalendar().apply {
+            set(Calendar.HOUR_OF_DAY, 13)
+            set(Calendar.MINUTE, 25)
+        }
+        viewModel.switchToSingleRepeatDateClicked()
+        assertEquals(
+            TodoTimeUiModel(13, 25),
+            viewModel.uiState.value.dateTime.time
         )
     }
 
