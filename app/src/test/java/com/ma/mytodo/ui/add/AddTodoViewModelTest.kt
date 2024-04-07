@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Test
+import java.util.Calendar
 
 class AddTodoViewModelTest {
 
@@ -91,15 +92,19 @@ class AddTodoViewModelTest {
     fun `When switch to single repeat date clicked, repeat date should get updated to today date and time should be current time`() {
         val viewModel = createViewModel()
         viewModel.switchToSingleRepeatDateClicked()
+        val calendar = Calendar.getInstance()
         assertEquals(
-            TodoTimeUiModel(0, 48),
+            TodoTimeUiModel(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)),
             viewModel.uiState.value.dateTime.time
         )
         assertEquals(
-            TodoRepeatDateUiModel.Single(2024, 4, 8),
+            TodoRepeatDateUiModel.Single(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ),
             viewModel.uiState.value.dateTime.repeatDate
         )
     }
-
 
 }

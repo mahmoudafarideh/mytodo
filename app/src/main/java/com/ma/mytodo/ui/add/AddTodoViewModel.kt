@@ -1,22 +1,15 @@
 package com.ma.mytodo.ui.add
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.Calendar
-import javax.inject.Inject
 
-@HiltViewModel
-class AddTodoViewModel @Inject constructor() : ViewModel() {
+class AddTodoViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddTodoUiModel())
     val uiState = _uiState.asStateFlow()
-
-    private fun updateState(action: (AddTodoUiModel) -> AddTodoUiModel) {
-        _uiState.update(action)
-    }
 
     fun titleChanged(title: String) {
         updateState { it.copy(title = it.title.copy(value = title)) }
@@ -59,6 +52,10 @@ class AddTodoViewModel @Inject constructor() : ViewModel() {
     private fun getCurrentTime(): TodoTimeUiModel {
         val calendar = Calendar.getInstance()
         return TodoTimeUiModel(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
+    }
+
+    private fun updateState(action: (AddTodoUiModel) -> AddTodoUiModel) {
+        _uiState.update(action)
     }
 
 }
