@@ -48,5 +48,15 @@ class AddTodoViewModelTest {
         assertEquals("New Description", viewModel.uiState.value.description.value)
     }
 
+    @Test
+    fun `When time changed, time state should get updated`() {
+        val viewModel = createViewModel()
+        viewModel.timeChanged(22, 34)
+        assertEquals(
+            TodoTimeUiModel(22, 34),
+            viewModel.uiState.value.dateTime.time
+        )
+    }
+
 
 }
