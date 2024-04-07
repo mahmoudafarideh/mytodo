@@ -87,5 +87,19 @@ class AddTodoViewModelTest {
         )
     }
 
+    @Test
+    fun `When switch to single repeat date clicked, repeat date should get updated to today date and time should be current time`() {
+        val viewModel = createViewModel()
+        viewModel.switchToSingleRepeatDateClicked()
+        assertEquals(
+            TodoTimeUiModel(0, 48),
+            viewModel.uiState.value.dateTime.time
+        )
+        assertEquals(
+            TodoRepeatDateUiModel.Single(2024, 4, 8),
+            viewModel.uiState.value.dateTime.repeatDate
+        )
+    }
+
 
 }

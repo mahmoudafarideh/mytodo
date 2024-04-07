@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +37,28 @@ class AddTodoViewModel @Inject constructor() : ViewModel() {
                 )
             )
         }
+    }
+
+    fun switchToSingleRepeatDateClicked() {
+        updateState {
+            it.copy(
+                dateTime = it.dateTime.copy(repeatDate = getTodayDate(), time = getCurrentTime())
+            )
+        }
+    }
+
+    private fun getTodayDate(): TodoRepeatDateUiModel.Single {
+        val calendar = Calendar.getInstance()
+        return TodoRepeatDateUiModel.Single(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH),
+        )
+    }
+
+    private fun getCurrentTime(): TodoTimeUiModel {
+        val calendar = Calendar.getInstance()
+        return TodoTimeUiModel(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE))
     }
 
 }
