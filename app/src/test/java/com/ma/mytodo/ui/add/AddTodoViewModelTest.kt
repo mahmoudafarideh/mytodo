@@ -1,6 +1,8 @@
 package com.ma.mytodo.ui.add
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class AddTodoViewModelTest {
@@ -28,7 +30,16 @@ class AddTodoViewModelTest {
         val viewModel = createViewModel()
         val title = viewModel.uiState.value.dateTime
         assertEquals(TodoRepeatDateUiModel.Daily, title.repeatDate)
-        assertEquals(TodoTimeUiModel(0,0), title.time)
+        assertEquals(TodoTimeUiModel(0, 0), title.time)
         assertFalse(title.hasError)
     }
+
+    @Test
+    fun `When title changed, the title state should get updated`() {
+        val viewModel = createViewModel()
+        viewModel.titleChanged("New Title")
+        assertEquals("New Title", viewModel.uiState.value.title.value)
+    }
+
+
 }
