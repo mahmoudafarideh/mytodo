@@ -17,10 +17,6 @@ class AddTodoViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AddTodoUiModel())
     val uiState = _uiState.asStateFlow()
 
-    private fun updateState(action: (AddTodoUiModel) -> AddTodoUiModel) {
-        _uiState.update(action)
-    }
-
     fun titleChanged(title: String) {
         updateState { it.copy(title = it.title.copy(value = title)) }
     }
