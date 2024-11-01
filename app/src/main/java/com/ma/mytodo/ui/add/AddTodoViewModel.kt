@@ -1,18 +1,25 @@
 package com.ma.mytodo.ui.add
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import com.ma.mytodo.utils.CalendarProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.Calendar
+import javax.inject.Inject
 
-class AddTodoViewModel(
+@HiltViewModel
+class AddTodoViewModel @Inject constructor(
     private val calendarProvider: CalendarProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddTodoUiModel())
     val uiState = _uiState.asStateFlow()
+
+    private fun updateState(action: (AddTodoUiModel) -> AddTodoUiModel) {
+        _uiState.update(action)
+    }
 
     fun titleChanged(title: String) {
         updateState { it.copy(title = it.title.copy(value = title)) }
