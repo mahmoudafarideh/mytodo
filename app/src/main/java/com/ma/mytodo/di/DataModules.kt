@@ -3,6 +3,9 @@ package com.ma.mytodo.di
 import android.content.Context
 import androidx.room.Room
 import com.ma.mytodo.data.source.TodoDatabase
+import com.ma.mytodo.utils.CalendarProvider
+import com.ma.mytodo.utils.CalendarProviderImp
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +27,11 @@ object DatabaseModule {
 
     @Provides
     fun todoDao(todoDatabase: TodoDatabase) = todoDatabase.todoDao()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface RepositoryModules {
+    @Binds
+    fun bindCalendarProvider(calendarProviderImp: CalendarProviderImp): CalendarProvider
 }

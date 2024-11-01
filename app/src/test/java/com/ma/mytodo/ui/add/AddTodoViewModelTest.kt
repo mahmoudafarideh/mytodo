@@ -98,7 +98,7 @@ class AddTodoViewModelTest {
         viewModel.switchToSingleRepeatDateClicked()
         val calendar = Calendar.getInstance()
         assertEquals(
-            TodoTimeUiModel(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)),
+            TodoTimeUiModel(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)),
             viewModel.uiState.value.dateTime.time
         )
         assertEquals(
@@ -108,6 +108,31 @@ class AddTodoViewModelTest {
                 calendar.get(Calendar.DAY_OF_MONTH)
             ),
             viewModel.uiState.value.dateTime.repeatDate
+        )
+    }
+
+    @Test
+    fun `The initial selected priority should be medium`() {
+        val viewModel = createViewModel()
+        assertEquals(
+            TodoPriorityUiModel.Medium, viewModel.uiState.value.priorityUiModel
+        )
+    }
+
+    @Test
+    fun `When priority selected by user, the selected priority state should get updated`() {
+        val viewModel = createViewModel()
+        viewModel.prioritySelected(TodoPriorityUiModel.High)
+        assertEquals(
+            TodoPriorityUiModel.High, viewModel.uiState.value.priorityUiModel
+        )
+        viewModel.prioritySelected(TodoPriorityUiModel.Low)
+        assertEquals(
+            TodoPriorityUiModel.Low, viewModel.uiState.value.priorityUiModel
+        )
+        viewModel.prioritySelected(TodoPriorityUiModel.Medium)
+        assertEquals(
+            TodoPriorityUiModel.Medium, viewModel.uiState.value.priorityUiModel
         )
     }
 

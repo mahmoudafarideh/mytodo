@@ -1,8 +1,8 @@
 package com.ma.mytodo.ui.add
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.ma.mytodo.utils.CalendarProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddTodoViewModel @Inject constructor(
-    private val calendarProvider: CalendarProvider
+    private val calendarProvider: CalendarProvider,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddTodoUiModel())
@@ -43,6 +43,12 @@ class AddTodoViewModel @Inject constructor(
             it.copy(
                 dateTime = it.dateTime.copy(repeatDate = getTodayDate(), time = getCurrentTime())
             )
+        }
+    }
+
+    fun prioritySelected(priority: TodoPriorityUiModel) {
+        updateState {
+            it.copy(priorityUiModel = priority)
         }
     }
 

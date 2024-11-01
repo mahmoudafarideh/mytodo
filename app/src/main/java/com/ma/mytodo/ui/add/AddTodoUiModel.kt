@@ -4,7 +4,14 @@ data class AddTodoUiModel(
     val title: TodoTitleUiModel = TodoTitleUiModel(),
     val description: TodoDescriptionUiModel = TodoDescriptionUiModel(),
     val dateTime: TodoDateTimeUiModel = TodoDateTimeUiModel(),
+    val priorityUiModel: TodoPriorityUiModel = TodoPriorityUiModel.Medium
 )
+
+enum class TodoPriorityUiModel {
+    High,
+    Medium,
+    Low
+}
 
 data class TodoTitleUiModel(
     val value: String? = null,
